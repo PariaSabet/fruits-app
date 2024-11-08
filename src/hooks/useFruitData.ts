@@ -9,6 +9,7 @@ export function useFruitData() {
 
   useEffect(() => {
     const fetchFruits = async () => {
+      setLoading(true)
       try {
         const data = await FruitService.getFruits()
         setFruits(data)

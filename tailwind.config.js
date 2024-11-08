@@ -1,25 +1,41 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+module.exports = {
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f5f7ff',
-          100: '#edf0ff',
-          500: '#a5b4fc',
-          600: '#8098f9',
-          700: '#6d85f6',
+        'fruit-pink': {
+          50: '#fdf5f7',
+          100: '#fceef3',
+          500: '#f7a8c3',
+          600: '#e698b3',
         },
-        secondary: {
+        'fruit-purple': {
+          50: '#f8f5fd',
+          100: '#f3eefb',
+          500: '#c7b0e6',
+          600: '#b79dd8',
+        },
+        'fruit-peach': {
           50: '#fff7f5',
-          100: '#ffefeb',
-          500: '#ffa69e',
-          600: '#ff9389',
+          100: '#fff0ed',
+          500: '#ffc5b5',
+          600: '#efb5a5',
+        },
+        'fruit-mint': {
+          50: '#f2f9f7',
+          100: '#e8f5f2',
+          500: '#a8d8cc',
+          600: '#98c8bc',
         },
       },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+      borderRadius: {
+        xl: '1rem',
+        '2xl': '1.5rem',
+      },
+      boxShadow: {
+        soft: '0 4px 20px rgba(0, 0, 0, 0.03)',
+        'soft-lg': '0 10px 30px rgba(0, 0, 0, 0.05)',
       },
     },
   },

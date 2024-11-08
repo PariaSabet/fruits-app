@@ -1,6 +1,9 @@
 import { Fruit } from '../types/fruit'
 import { useState } from 'react'
 import { FruitCaloriesChart } from './FruitCaloriesChart'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChartPie, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface FruitInstance extends Fruit {
   instanceId: string
@@ -30,9 +33,24 @@ export function FruitJar({ selectedFruits, onRemoveFruit }: FruitJarProps) {
           {selectedFruits.length > 0 && (
             <button
               onClick={() => setShowChart(!showChart)}
-              className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="
+                px-2 py-2 
+                bg-gradient-to-r from-blue-500 to-indigo-500 
+                text-white rounded-lg 
+                hover:from-blue-600 hover:to-indigo-600
+                shadow-sm hover:shadow-md
+                transform hover:-translate-y-0.5
+                transition-all duration-200
+                flex items-center space-x-2
+                font-medium
+                text-sm
+              "
             >
-              {showChart ? 'Hide Chart' : 'Show Chart'}
+              <FontAwesomeIcon
+                icon={faChartPie}
+                className={`h-4 w-4 ${showChart ? 'rotate-180' : ''} transition-transform`}
+              />
+              <span>{showChart ? 'Hide Chart' : 'Show Chart'}</span>
             </button>
           )}
         </div>
@@ -48,25 +66,46 @@ export function FruitJar({ selectedFruits, onRemoveFruit }: FruitJarProps) {
       )}
 
       <div className="space-y-2">
-        {selectedFruits.map((fruit) => (
-          <div
-            key={fruit.instanceId}
-            className="flex justify-between items-center p-2 bg-gray-50 rounded"
-          >
-            <span>
-              {fruit.name} ({fruit.nutritions.calories} calories)
-            </span>
-            <button
-              onClick={() => onRemoveFruit(fruit.instanceId)}
-              className="px-2 py-1 text-red-500 hover:text-red-700"
+        <AnimatePresence>
+          {selectedFruits.map((fruit) => (
+            <motion.div
+              key={fruit.instanceId}
+              initial={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.2 }}
+              className="flex justify-between items-center p-2 bg-gray-50 rounded"
             >
-              Remove
-            </button>
-          </div>
-        ))}
-        {selectedFruits.length === 0 && (
-          <p className="text-gray-500">No fruits in the jar</p>
-        )}
+              <span>
+                {fruit.name} ({fruit.nutritions.calories} calories)
+              </span>
+              <button
+                onClick={() => onRemoveFruit(fruit.instanceId)}
+                className="
+                  p-2 
+                  text-red-200 hover:text-red-500
+                  rounded-full
+                  hover:bg-red-50
+                  transition-colors
+                "
+                aria-label="Remove fruit"
+              >
+                <FontAwesomeIcon icon={faTrash} className="h-4 w-4" />
+              </button>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+        <AnimatePresence>
+          {selectedFruits.length === 0 && (
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="text-gray-500"
+            >
+              No fruits in the jar
+            </motion.p>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )

@@ -1,5 +1,6 @@
-import { Fruit, GroupingField, ViewType } from '../types/fruit'
+import { Fruit, ViewType } from '../types/fruit'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 
 interface FruitListProps {
   groupedFruits: Record<string, Fruit[]>
@@ -8,12 +9,7 @@ interface FruitListProps {
   view: ViewType
 }
 
-export function FruitList({
-  groupedFruits,
-  selectedFruits,
-  onAddFruit,
-  view,
-}: FruitListProps) {
+export function FruitList({ groupedFruits, onAddFruit, view }: FruitListProps) {
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())
 
   const toggleGroup = (group: string) => {
@@ -32,56 +28,93 @@ export function FruitList({
   }
 
   const renderListView = (fruits: Fruit[]) => (
-    <div>
+    <div className="space-y-2">
       {fruits.map((fruit) => (
-        <div
+        <motion.div
           key={fruit.id}
-          className="p-3 hover:bg-gray-50 flex justify-between items-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="px-4 py-2 hover:bg-fruit-pink-50 transition-colors duration-200 
+                   flex justify-between items-center rounded-xl bg-white"
         >
-          <span>
-            {fruit.name} ({fruit.nutritions.calories} calories)
+          <span className="font-medium">
+            {fruit.name}
+            <span className="text-fruit-purple-500 text-sm ml-2">
+              ({fruit.nutritions.calories} calories)
+            </span>
           </span>
           <button
             onClick={() => onAddFruit(fruit)}
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-4 py-2 bg-fruit-mint-500 text-white text-xs rounded-lg hover:bg-fruit-mint-600 
+                     transition-colors duration-200 shadow-soft"
           >
             Add
           </button>
-        </div>
+        </motion.div>
       ))}
     </div>
   )
 
   const renderTableView = (fruits: Fruit[]) => (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto rounded-xl shadow-soft bg-white">
       <table className="w-full">
         <thead>
-          <tr className="bg-gray-50">
-            <th className="p-3 text-left">Name</th>
-            <th className="p-3 text-left">Family</th>
-            <th className="p-3 text-left">Order</th>
-            <th className="p-3 text-left">Genus</th>
-            <th className="p-3 text-left">Calories</th>
-            <th className="p-3 text-left">Action</th>
+          <tr className="bg-fruit-purple-50">
+            <th className="p-4 text-left font-medium text-fruit-purple-500">
+              Name
+            </th>
+            <th className="p-4 text-left font-medium text-fruit-purple-500">
+              Family
+            </th>
+            <th className="p-4 text-left font-medium text-fruit-purple-500">
+              Order
+            </th>
+            <th className="p-4 text-left font-medium text-fruit-purple-500">
+              Genus
+            </th>
+            <th className="p-4 text-left font-medium text-fruit-purple-500">
+              Calories
+            </th>
+            <th className="p-4 text-left font-medium text-fruit-purple-500">
+              Action
+            </th>
           </tr>
         </thead>
         <tbody>
           {fruits.map((fruit) => (
-            <tr key={fruit.id} className="hover:bg-gray-50">
-              <td className="p-3 border-t">{fruit.name}</td>
-              <td className="p-3 border-t">{fruit.family}</td>
-              <td className="p-3 border-t">{fruit.order}</td>
-              <td className="p-3 border-t">{fruit.genus}</td>
-              <td className="p-3 border-t">{fruit.nutritions.calories}</td>
-              <td className="p-3 border-t">
+            <motion.tr
+              key={fruit.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="hover:bg-fruit-pink-50 transition-colors duration-200"
+            >
+              <td className="p-4 border-t border-fruit-purple-100">
+                {fruit.name}
+              </td>
+              <td className="p-4 border-t border-fruit-purple-100">
+                {fruit.family}
+              </td>
+              <td className="p-4 border-t border-fruit-purple-100">
+                {fruit.order}
+              </td>
+              <td className="p-4 border-t border-fruit-purple-100">
+                {fruit.genus}
+              </td>
+              <td className="p-4 border-t border-fruit-purple-100">
+                {fruit.nutritions.calories}
+              </td>
+              <td className="p-4 border-t border-fruit-purple-100">
                 <button
                   onClick={() => onAddFruit(fruit)}
-                  className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                  className="px-4 py-2 bg-fruit-mint-500 text-white text-xs rounded-lg hover:bg-fruit-mint-600 
+                           transition-colors duration-200 shadow-soft"
                 >
                   Add
                 </button>
               </td>
-            </tr>
+            </motion.tr>
           ))}
         </tbody>
       </table>
@@ -89,21 +122,27 @@ export function FruitList({
   )
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {Object.entries(groupedFruits).map(([group, fruits]) => (
-        <div key={group} className="border rounded-lg overflow-hidden">
+        <div
+          key={group}
+          className="border border-fruit-purple-100 rounded-2xl overflow-hidden shadow-soft bg-white"
+        >
           {group !== 'none' ? (
-            <div className="flex items-center justify-between bg-gray-100">
+            <div className="flex items-center justify-between bg-fruit-purple-50 border-b border-fruit-purple-100">
               <button
-                className="flex-grow p-3 text-left font-medium flex justify-between items-center"
+                className="flex-grow p-4 text-left font-medium flex justify-between items-center text-fruit-purple-500"
                 onClick={() => toggleGroup(group)}
               >
-                <span>{group}</span>
-                <span>{expandedGroups.has(group) ? '−' : '+'}</span>
+                <span className="text-lg">{group}</span>
+                <span className="text-fruit-purple-500 text-xl">
+                  {expandedGroups.has(group) ? '−' : '+'}
+                </span>
               </button>
               <button
                 onClick={(e) => handleAddGroup(fruits, e)}
-                className="px-4 py-2 mr-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                className="px-3 py-2 mr-4 bg-fruit-peach-500 text-white text-sm rounded-lg hover:bg-fruit-peach-600 
+                         transition-colors duration-200 shadow-soft"
               >
                 Add Group
               </button>
@@ -111,9 +150,9 @@ export function FruitList({
           ) : null}
 
           <div
-            className={
+            className={`p-4 ${
               group !== 'none' && !expandedGroups.has(group) ? 'hidden' : ''
-            }
+            }`}
           >
             {view === 'list' ? renderListView(fruits) : renderTableView(fruits)}
           </div>

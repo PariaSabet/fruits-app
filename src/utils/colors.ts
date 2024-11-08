@@ -22,6 +22,8 @@ export const colors = {
     '#bfdbfe', // soft sky
     '#ddd6fe', // soft purple
     '#c1d8c3', // soft sage
+    '#a8d8cc', // soft mint
+    '#f9a8d4', // soft pink
   ],
   chartHover: [
     '#8098f9', // slightly darker indigo
@@ -33,5 +35,7 @@ export const colors = {
     '#93c5fd', // slightly darker sky
     '#c4b5fd', // slightly darker purple
     '#a3c9a6', // slightly darker sage
+    '#a8d8cc', // slightly darker mint
+    '#f9a8d4', // slightly darker pink
   ],
 }
