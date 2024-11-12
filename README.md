@@ -8,8 +8,13 @@ This is a simple Fruit Catalog APP
 
 The site is deployed here: https://fruitsappdemo.netlify.app/
 
-because of the CORS error, for now, I bypassed it by installing an extension. I know this was not a good idea!!
+This project uses a Netlify Function as a proxy server to handle CORS (Cross-Origin Resource Sharing) issues when making API requests. The proxy server acts as a middleware between the frontend application and the target API.
 
-the extension link: https://chromewebstore.google.com/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino
+### Implementation
+The proxy is implemented in `netlify/functions/proxy.ts` and handles CORS by:
+1. Receiving requests from the frontend
+2. Forwarding them to the target API
+3. Returning the response back to the client
+
 
  
