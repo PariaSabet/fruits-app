@@ -1,7 +1,6 @@
 import { Fruit } from '../types/fruit'
 
-const API_URL =
-  'https://wcz3qr33kmjvzotdqt65efniv40kokon.lambda-url.us-east-2.on.aws/'
+const API_URL = 'https://fruitsappdemo.netlify.app/.netlify/functions/proxy'
 
 export const FruitService = {
   async getFruits(): Promise<Fruit[]> {
